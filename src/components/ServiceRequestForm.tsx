@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { API } from 'aws-amplify';
+import { generateClient } from 'aws-amplify/api';
 import { createServiceRequest } from '../graphql/mutations';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -8,6 +8,7 @@ interface ServiceRequestFormProps {
 }
 
 const ServiceRequestForm = ({ onSubmitSuccess }: ServiceRequestFormProps) => {
+  const client = generateClient();
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -38,7 +39,7 @@ const ServiceRequestForm = ({ onSubmitSuccess }: ServiceRequestFormProps) => {
         resolutionDate
       };
 
-      await API.graphql({
+      await client.graphql({
         query: createServiceRequest,
         variables: { input }
       });
