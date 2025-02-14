@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-incidentportal-dev-1c757-authRole",
+      "UnauthRoleArn": "arn:aws:iam::418272784657:role/amplify-incidentportal-dev-1c757-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::418272784657:role/amplify-incidentportal-dev-1c757-authRole",
+      "Region": "ap-southeast-2",
+      "DeploymentBucketName": "amplify-incidentportal-dev-1c757-deployment",
+      "UnauthRoleName": "amplify-incidentportal-dev-1c757-unauthRole",
+      "StackName": "amplify-incidentportal-dev-1c757",
+      "StackId": "arn:aws:cloudformation:ap-southeast-2:418272784657:stack/amplify-incidentportal-dev-1c757/82f37310-ea2f-11ef-878a-0283a0353a97",
+      "AmplifyAppId": "d1rxewo01ycu46"
+    },
+    "categories": {
+      "auth": {
+        "incidentportal57679612": {}
+      },
+      "api": {
+        "incidentportal": {}
+      }
+    }
+  }
+}
