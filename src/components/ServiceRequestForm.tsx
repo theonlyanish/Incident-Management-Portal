@@ -4,6 +4,7 @@ import { createServiceRequest } from '../graphql/mutations';
 import { v4 as uuidv4 } from 'uuid';
 import FileUpload from './FileUpload';
 import { Severity } from '../API';
+import { getCurrentUser } from 'aws-amplify/auth';
 
 interface ServiceRequestFormProps {
   onSubmitSuccess: () => void;
@@ -48,17 +49,18 @@ const ServiceRequestForm = ({ onSubmitSuccess }: ServiceRequestFormProps) => {
     setSubmitStatus({ type: null, message: '' });
 
     console.log('Form Data:', formData);
-  console.log('Severity:', formData.severity);
+    console.log('Severity:', formData.severity);
 
-    
     try {
+      const user = await getCurrentUser();
       const resolutionDate = calculateResolutionDate(formData.creationDate, formData.severity);
       const caseNumber = `CASE-${uuidv4().slice(0, 8)}`;
 
       const input = {
         caseNumber,
         ...formData,
-        resolutionDate
+        resolutionDate,
+        userId: user.userId
       };
 
       await client.graphql({
