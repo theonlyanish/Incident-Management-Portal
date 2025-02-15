@@ -1,0 +1,16 @@
+{
+  "resourceName": "incidentStatic226",
+  "policyUUID": "7e642486",
+  "bucketName": "incidentportal4faa451b70664bd7823dbb3f5442c597",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "S3Triggerf4c87da4",
+  "groupAccess": {}
+}

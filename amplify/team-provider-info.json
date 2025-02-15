@@ -17,6 +17,15 @@
       },
       "api": {
         "incidentportal": {}
+      },
+      "function": {
+        "S3Triggerf4c87da4": {
+          "deploymentBucketName": "amplify-incidentportal-dev-1c757-deployment",
+          "s3Key": "amplify-builds/S3Triggerf4c87da4-2b503941776130616a58-build.zip"
+        }
+      },
+      "storage": {
+        "incidentStatic226": {}
       }
     }
   }

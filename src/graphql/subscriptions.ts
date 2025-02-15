@@ -13,14 +13,17 @@ export const onCreateServiceRequest = /* GraphQL */ `subscription OnCreateServic
 ) {
   onCreateServiceRequest(filter: $filter) {
     id
+    caseNumber
     name
     description
+    creationDate
     severity
-    reporter
-    contact
-    location
-    createdAt
     resolutionDate
+    reporterName
+    contactInformation
+    location
+    attachments
+    createdAt
     updatedAt
     __typename
   }
@@ -34,14 +37,17 @@ export const onUpdateServiceRequest = /* GraphQL */ `subscription OnUpdateServic
 ) {
   onUpdateServiceRequest(filter: $filter) {
     id
+    caseNumber
     name
     description
+    creationDate
     severity
-    reporter
-    contact
-    location
-    createdAt
     resolutionDate
+    reporterName
+    contactInformation
+    location
+    attachments
+    createdAt
     updatedAt
     __typename
   }
@@ -55,14 +61,17 @@ export const onDeleteServiceRequest = /* GraphQL */ `subscription OnDeleteServic
 ) {
   onDeleteServiceRequest(filter: $filter) {
     id
+    caseNumber
     name
     description
+    creationDate
     severity
-    reporter
-    contact
-    location
-    createdAt
     resolutionDate
+    reporterName
+    contactInformation
+    location
+    attachments
+    createdAt
     updatedAt
     __typename
   }

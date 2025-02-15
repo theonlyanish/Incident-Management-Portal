@@ -14,14 +14,17 @@ export const createServiceRequest = /* GraphQL */ `mutation CreateServiceRequest
 ) {
   createServiceRequest(input: $input, condition: $condition) {
     id
+    caseNumber
     name
     description
+    creationDate
     severity
-    reporter
-    contact
-    location
-    createdAt
     resolutionDate
+    reporterName
+    contactInformation
+    location
+    attachments
+    createdAt
     updatedAt
     __typename
   }
@@ -36,14 +39,17 @@ export const updateServiceRequest = /* GraphQL */ `mutation UpdateServiceRequest
 ) {
   updateServiceRequest(input: $input, condition: $condition) {
     id
+    caseNumber
     name
     description
+    creationDate
     severity
-    reporter
-    contact
-    location
-    createdAt
     resolutionDate
+    reporterName
+    contactInformation
+    location
+    attachments
+    createdAt
     updatedAt
     __typename
   }
@@ -58,14 +64,17 @@ export const deleteServiceRequest = /* GraphQL */ `mutation DeleteServiceRequest
 ) {
   deleteServiceRequest(input: $input, condition: $condition) {
     id
+    caseNumber
     name
     description
+    creationDate
     severity
-    reporter
-    contact
-    location
-    createdAt
     resolutionDate
+    reporterName
+    contactInformation
+    location
+    attachments
+    createdAt
     updatedAt
     __typename
   }

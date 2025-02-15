@@ -11,14 +11,17 @@ type GeneratedQuery<InputType, OutputType> = string & {
 export const getServiceRequest = /* GraphQL */ `query GetServiceRequest($id: ID!) {
   getServiceRequest(id: $id) {
     id
+    caseNumber
     name
     description
+    creationDate
     severity
-    reporter
-    contact
-    location
-    createdAt
     resolutionDate
+    reporterName
+    contactInformation
+    location
+    attachments
+    createdAt
     updatedAt
     __typename
   }
@@ -35,14 +38,17 @@ export const listServiceRequests = /* GraphQL */ `query ListServiceRequests(
   listServiceRequests(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
+      caseNumber
       name
       description
+      creationDate
       severity
-      reporter
-      contact
-      location
-      createdAt
       resolutionDate
+      reporterName
+      contactInformation
+      location
+      attachments
+      createdAt
       updatedAt
       __typename
     }

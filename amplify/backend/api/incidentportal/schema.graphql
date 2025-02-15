@@ -13,6 +13,7 @@ type ServiceRequest @model @auth(rules: [{ allow: private }]) {
   reporterName: String!
   contactInformation: AWSEmail!
   location: String!
+  attachments: [String]
   createdAt: AWSDateTime
   updatedAt: AWSDateTime
 }
