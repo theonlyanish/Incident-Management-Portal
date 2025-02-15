@@ -46,6 +46,10 @@ const ServiceRequestForm = ({ onSubmitSuccess }: ServiceRequestFormProps) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus({ type: null, message: '' });
+
+    console.log('Form Data:', formData);
+  console.log('Severity:', formData.severity);
+
     
     try {
       const resolutionDate = calculateResolutionDate(formData.creationDate, formData.severity);
