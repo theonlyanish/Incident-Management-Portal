@@ -1,31 +1,25 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-incidentportal-dev-1c757-authRole",
-      "UnauthRoleArn": "arn:aws:iam::418272784657:role/amplify-incidentportal-dev-1c757-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::418272784657:role/amplify-incidentportal-dev-1c757-authRole",
+      "AuthRoleName": "amplify-incidentportal-dev-7072d-authRole",
+      "UnauthRoleArn": "arn:aws:iam::418272784657:role/amplify-incidentportal-dev-7072d-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::418272784657:role/amplify-incidentportal-dev-7072d-authRole",
       "Region": "ap-southeast-2",
-      "DeploymentBucketName": "amplify-incidentportal-dev-1c757-deployment",
-      "UnauthRoleName": "amplify-incidentportal-dev-1c757-unauthRole",
-      "StackName": "amplify-incidentportal-dev-1c757",
-      "StackId": "arn:aws:cloudformation:ap-southeast-2:418272784657:stack/amplify-incidentportal-dev-1c757/82f37310-ea2f-11ef-878a-0283a0353a97",
-      "AmplifyAppId": "d1rxewo01ycu46"
+      "DeploymentBucketName": "amplify-incidentportal-dev-7072d-deployment",
+      "UnauthRoleName": "amplify-incidentportal-dev-7072d-unauthRole",
+      "StackName": "amplify-incidentportal-dev-7072d",
+      "StackId": "arn:aws:cloudformation:ap-southeast-2:418272784657:stack/amplify-incidentportal-dev-7072d/89077d60-eb82-11ef-b8bf-02ce7c032f7d",
+      "AmplifyAppId": "d2nrdz0ptlxaza"
     },
     "categories": {
       "auth": {
-        "incidentportal57679612": {}
+        "incidentportalb98481fa": {}
       },
       "api": {
         "incidentportal": {}
       },
-      "function": {
-        "S3Triggerf4c87da4": {
-          "deploymentBucketName": "amplify-incidentportal-dev-1c757-deployment",
-          "s3Key": "amplify-builds/S3Triggerf4c87da4-2b503941776130616a58-build.zip"
-        }
-      },
       "storage": {
-        "incidentStatic226": {}
+        "incidentfiles": {}
       }
     }
   }

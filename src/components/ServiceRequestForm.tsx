@@ -48,19 +48,21 @@ const ServiceRequestForm = ({ onSubmitSuccess }: ServiceRequestFormProps) => {
     setIsSubmitting(true);
     setSubmitStatus({ type: null, message: '' });
 
-    console.log('Form Data:', formData);
-    console.log('Severity:', formData.severity);
-
     try {
-      const user = await getCurrentUser();
       const resolutionDate = calculateResolutionDate(formData.creationDate, formData.severity);
       const caseNumber = `CASE-${uuidv4().slice(0, 8)}`;
 
       const input = {
         caseNumber,
-        ...formData,
+        name: formData.name,
+        description: formData.description,
+        creationDate: formData.creationDate,
+        severity: formData.severity,
         resolutionDate,
-        userId: user.userId
+        reporterName: formData.reporterName,
+        contactInformation: formData.contactInformation,
+        location: formData.location,
+        attachments: formData.attachments
       };
 
       await client.graphql({
@@ -85,11 +87,11 @@ const ServiceRequestForm = ({ onSubmitSuccess }: ServiceRequestFormProps) => {
       });
       onSubmitSuccess();
     } catch (error) {
+      console.error('Error creating service request:', error);
       setSubmitStatus({
         type: 'error',
         message: 'Error submitting service request. Please try again.'
       });
-      console.error('Error creating service request:', error);
     } finally {
       setIsSubmitting(false);
     }

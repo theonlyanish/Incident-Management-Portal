@@ -1,25 +1,10 @@
 {
   "api": {
     "incidentportal": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "UserPoolId"
-          ],
-          "category": "auth",
-          "resourceName": "incidentportal57679612"
-        }
-      ],
+      "dependsOn": [],
       "output": {
         "authConfig": {
-          "additionalAuthenticationProviders": [
-            {
-              "authenticationType": "AMAZON_COGNITO_USER_POOLS",
-              "userPoolConfig": {
-                "userPoolId": "authincidentportal57679612"
-              }
-            }
-          ],
+          "additionalAuthenticationProviders": [],
           "defaultAuthentication": {
             "apiKeyConfig": {
               "apiKeyExpirationDays": 7
@@ -33,7 +18,7 @@
     }
   },
   "auth": {
-    "incidentportal57679612": {
+    "incidentportalb98481fa": {
       "customAuth": false,
       "dependsOn": [],
       "frontendAuthConfig": {
@@ -58,31 +43,9 @@
       "service": "Cognito"
     }
   },
-  "function": {
-    "S3Triggerd7282ba2": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
-    "S3Triggerf4c87da4": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    }
-  },
   "storage": {
-    "incidentStatic226": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "Name",
-            "Arn",
-            "LambdaExecutionRole"
-          ],
-          "category": "function",
-          "resourceName": "S3Triggerd7282ba2"
-        }
-      ],
+    "incidentfiles": {
+      "dependsOn": [],
       "providerPlugin": "awscloudformation",
       "service": "S3"
     }

@@ -1,0 +1,16 @@
+{
+  "resourceName": "incidentfiles",
+  "policyUUID": "3a92a479",
+  "bucketName": "incidentportal5ec188c70e324495961ee8ece9e85938",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}
