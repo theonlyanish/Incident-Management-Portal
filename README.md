@@ -15,9 +15,9 @@ A modern, responsive web application for managing service requests and incidents
 
 The application is deployed and accessible at: [Your Amplify URL]
 
-### Demo Credentials
-- Username: [Your test username]
-- Password: [Your test password]
+### Demo Credentials (can create own account or use the following)
+- Username: anka
+- Password: refer to email or approach document
 
 ## Technology Stack
 
