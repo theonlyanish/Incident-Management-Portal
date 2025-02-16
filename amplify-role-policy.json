@@ -1,0 +1,20 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "amplify:*",
+                "cloudfront:*",
+                "s3:*",
+                "dynamodb:*",
+                "cognito-idp:*",
+                "appsync:*",
+                "iam:GetRole",
+                "iam:ListRoles",
+                "iam:PassRole"
+            ],
+            "Resource": "*"
+        }
+    ]
+} 
