@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { Amplify } from 'aws-amplify'
+import { signOut } from 'aws-amplify/auth'
 import { withAuthenticator } from '@aws-amplify/ui-react'
 import '@aws-amplify/ui-react/styles.css'
-import { ThemeProvider, createTheme, CssBaseline, Container, Box, Typography, IconButton } from '@mui/material'
+import { ThemeProvider, createTheme, CssBaseline, Container, Box, Typography, IconButton, Button } from '@mui/material'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
+import LogoutIcon from '@mui/icons-material/Logout'
 import awsconfig from './aws-exports'
 import ServiceRequestForm from './components/ServiceRequestForm'
 import ServiceRequestList from './components/ServiceRequestList'
@@ -30,14 +32,39 @@ function App() {
     setDarkMode(prev => !prev)
   }
 
+  const handleLogout = async () => {
+    try {
+      await signOut();
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
-        <Box sx={{ position: 'fixed', top: 16, right: 16, zIndex: 1 }}>
+        <Box sx={{ 
+          position: 'fixed', 
+          top: 16, 
+          right: 16, 
+          zIndex: 1,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2
+        }}>
           <IconButton onClick={toggleDarkMode} color="inherit">
             {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
           </IconButton>
+          <Button
+            variant="outlined"
+            color="inherit"
+            startIcon={<LogoutIcon />}
+            onClick={handleLogout}
+            size="small"
+          >
+            Logout
+          </Button>
         </Box>
 
         <Container maxWidth="lg" sx={{ py: 4 }}>
