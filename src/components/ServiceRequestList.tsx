@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { generateClient } from 'aws-amplify/api';
 import { listServiceRequests } from '../graphql/queries';
 import { onCreateServiceRequest } from '../graphql/subscriptions';
+import { Card, CardContent, Typography, Chip, Grid, Box, Paper } from '@mui/material';
 
 interface ServiceRequest {
   id: string;
@@ -37,7 +38,6 @@ const ServiceRequestList = ({ refreshTrigger }: ServiceRequestListProps) => {
       const result = await client.graphql({
         query: listServiceRequests
       });
-      // Transform the data to match our interface
       const data = result.data.listServiceRequests.items.map((item: any) => ({
         id: item.id,
         caseNumber: item.caseNumber,
@@ -80,120 +80,115 @@ const ServiceRequestList = ({ refreshTrigger }: ServiceRequestListProps) => {
     });
   };
 
-  const getSeverityColor = (severity: string) => {
+  const getSeverityColor = (severity: string): "error" | "warning" | "success" | "default" => {
     switch (severity) {
       case 'HIGH':
-        return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100';
+        return 'error';
       case 'MEDIUM':
-        return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100';
+        return 'warning';
       case 'LOW':
-        return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100';
+        return 'success';
       default:
-        return 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-100';
+        return 'default';
     }
   };
 
-  const getStatusBadge = (creationDate: string, resolutionDate: string) => {
+  const getStatusChip = (resolutionDate: string) => {
     const now = new Date();
     const resolution = new Date(resolutionDate);
     const isOverdue = now > resolution;
     
     return (
-      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-        isOverdue 
-          ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100' 
-          : 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100'
-      }`}>
-        {isOverdue ? 'Overdue' : 'Active'}
-      </span>
+      <Chip
+        label={isOverdue ? 'Overdue' : 'Active'}
+        color={isOverdue ? 'error' : 'primary'}
+        size="small"
+      />
     );
   };
 
   return (
-    <div className="mt-8">
-      <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Service Requests</h2>
-      <div className="space-y-4">
+    <Box sx={{ mt: 4 }}>
+      <Typography variant="h5" component="h2" gutterBottom>
+        Service Requests
+      </Typography>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         {requests.map((request) => (
-          <div
-            key={request.id}
-            className="bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden 
-                     border border-gray-200 dark:border-gray-700 hover:shadow-xl 
-                     transition-all duration-300"
-          >
-            <div className="p-6">
-              <div className="flex flex-wrap justify-between items-start gap-4">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                      {request.name}
-                    </h3>
-                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${getSeverityColor(request.severity)}`}>
-                      {request.severity}
-                    </span>
-                    {getStatusBadge(request.creationDate, request.resolutionDate)}
-                  </div>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
-                    Case #{request.caseNumber}
-                  </p>
-                  <p className="text-gray-600 dark:text-gray-300 mb-4">
-                    {request.description}
-                  </p>
-                </div>
-              </div>
+          <Card key={request.id} sx={{ width: '100%' }}>
+            <CardContent>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
+                <Typography variant="h6" component="h3">
+                  {request.name}
+                </Typography>
+                <Chip
+                  label={request.severity}
+                  color={getSeverityColor(request.severity)}
+                  size="small"
+                />
+                {getStatusChip(request.resolutionDate)}
+              </Box>
               
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                <div>
-                  <div className="space-y-3">
-                    <div>
-                      <p className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider font-medium">
-                        Reporter
-                      </p>
-                      <p className="text-gray-900 dark:text-white mt-1">{request.reporterName}</p>
-                    </div>
-                    <div>
-                      <p className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider font-medium">
-                        Contact
-                      </p>
-                      <p className="text-gray-900 dark:text-white mt-1">{request.contactInformation}</p>
-                    </div>
-                  </div>
-                </div>
-                
-                <div>
-                  <div className="space-y-3">
-                    <div>
-                      <p className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider font-medium">
-                        Location
-                      </p>
-                      <p className="text-gray-900 dark:text-white mt-1">{request.location}</p>
-                    </div>
-                    <div>
-                      <p className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider font-medium">
-                        Created
-                      </p>
-                      <p className="text-gray-900 dark:text-white mt-1">
-                        {new Date(request.creationDate).toLocaleDateString()}
-                      </p>
-                    </div>
-                  </div>
-                </div>
+              <Typography variant="body2" color="text.secondary" gutterBottom>
+                Case #{request.caseNumber}
+              </Typography>
+              
+              <Typography variant="body1" paragraph>
+                {request.description}
+              </Typography>
 
-                <div>
-                  <div>
-                    <p className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider font-medium">
-                      Resolution Due
-                    </p>
-                    <p className="text-gray-900 dark:text-white mt-1">
-                      {new Date(request.resolutionDate).toLocaleDateString()}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+              <Box sx={{ mt: 3, pt: 2, borderTop: 1, borderColor: 'divider' }}>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} md={4}>
+                    <Box>
+                      <Typography variant="overline" display="block">
+                        Reporter
+                      </Typography>
+                      <Typography variant="body2">
+                        {request.reporterName}
+                      </Typography>
+                      <Typography variant="overline" display="block" sx={{ mt: 2 }}>
+                        Contact
+                      </Typography>
+                      <Typography variant="body2">
+                        {request.contactInformation}
+                      </Typography>
+                    </Box>
+                  </Grid>
+
+                  <Grid item xs={12} md={4}>
+                    <Box>
+                      <Typography variant="overline" display="block">
+                        Location
+                      </Typography>
+                      <Typography variant="body2">
+                        {request.location}
+                      </Typography>
+                      <Typography variant="overline" display="block" sx={{ mt: 2 }}>
+                        Created
+                      </Typography>
+                      <Typography variant="body2">
+                        {new Date(request.creationDate).toLocaleDateString()}
+                      </Typography>
+                    </Box>
+                  </Grid>
+
+                  <Grid item xs={12} md={4}>
+                    <Box>
+                      <Typography variant="overline" display="block">
+                        Resolution Due
+                      </Typography>
+                      <Typography variant="body2">
+                        {new Date(request.resolutionDate).toLocaleDateString()}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Box>
+            </CardContent>
+          </Card>
         ))}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

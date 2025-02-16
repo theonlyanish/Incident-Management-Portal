@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { uploadData } from 'aws-amplify/storage';
-import { getCurrentUser } from 'aws-amplify/auth';
 
 interface FileUploadProps {
   onUploadSuccess: (fileKey: string) => void;
