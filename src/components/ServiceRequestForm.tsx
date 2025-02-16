@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { generateClient } from 'aws-amplify/api';
 import { createServiceRequest } from '../graphql/mutations';
+import { Severity } from '../API';
 import { TextField, Button, MenuItem, Grid, Box } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
@@ -13,8 +14,8 @@ const ServiceRequestForm = ({ onSubmitSuccess }: ServiceRequestFormProps) => {
   const [formData, setFormData] = useState({
     name: '',
     description: '',
-    severity: 'LOW',
-    resolutionDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
+    severity: Severity.LOW,
+    resolutionDate: null as Date | null,
     reporterName: '',
     contactInformation: '',
     location: ''
@@ -23,19 +24,38 @@ const ServiceRequestForm = ({ onSubmitSuccess }: ServiceRequestFormProps) => {
   const [submitting, setSubmitting] = useState(false);
   const client = generateClient();
 
+  const calculateResolutionDate = (severity: Severity): Date => {
+    const now = new Date();
+    const daysToAdd = severity === Severity.HIGH ? 1 : severity === Severity.MEDIUM ? 3 : 5;
+    const date = new Date(now);
+    date.setDate(date.getDate() + daysToAdd);
+    return date;
+  };
+
+  useEffect(() => {
+    // Update resolution date when severity changes
+    const calculatedDate = calculateResolutionDate(formData.severity);
+    setFormData(prev => ({
+      ...prev,
+      resolutionDate: prev.resolutionDate || calculatedDate
+    }));
+  }, [formData.severity]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
 
     try {
       const caseNumber = `SR${Date.now()}`;
+      const resolutionDate = formData.resolutionDate || calculateResolutionDate(formData.severity);
+      
       const input = {
         caseNumber,
         name: formData.name,
         description: formData.description,
         creationDate: new Date().toISOString(),
         severity: formData.severity,
-        resolutionDate: formData.resolutionDate.toISOString(),
+        resolutionDate: resolutionDate.toISOString(),
         reporterName: formData.reporterName,
         contactInformation: formData.contactInformation,
         location: formData.location
@@ -49,8 +69,8 @@ const ServiceRequestForm = ({ onSubmitSuccess }: ServiceRequestFormProps) => {
       setFormData({
         name: '',
         description: '',
-        severity: 'LOW',
-        resolutionDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        severity: Severity.LOW,
+        resolutionDate: null,
         reporterName: '',
         contactInformation: '',
         location: ''
@@ -106,26 +126,25 @@ const ServiceRequestForm = ({ onSubmitSuccess }: ServiceRequestFormProps) => {
               value={formData.severity}
               onChange={handleChange}
               required
+              helperText="Resolution date will be automatically set based on severity"
             >
-              <MenuItem value="LOW">Low</MenuItem>
-              <MenuItem value="MEDIUM">Medium</MenuItem>
-              <MenuItem value="HIGH">High</MenuItem>
+              <MenuItem value={Severity.LOW}>Low (5 days)</MenuItem>
+              <MenuItem value={Severity.MEDIUM}>Medium (3 days)</MenuItem>
+              <MenuItem value={Severity.HIGH}>High (1 day)</MenuItem>
             </TextField>
           </Grid>
 
           <Grid item xs={12} sm={6}>
             <DatePicker
-              label="Resolution Date"
+              label="Resolution Date (Optional)"
               value={formData.resolutionDate}
               onChange={(newValue) => {
-                if (newValue) {
-                  setFormData(prev => ({ ...prev, resolutionDate: newValue }));
-                }
+                setFormData(prev => ({ ...prev, resolutionDate: newValue }));
               }}
               slotProps={{
                 textField: {
                   fullWidth: true,
-                  required: true
+                  helperText: "Leave empty for automatic calculation"
                 }
               }}
             />
