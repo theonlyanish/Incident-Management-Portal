@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { generateClient } from 'aws-amplify/api';
 import { listServiceRequests } from '../graphql/queries';
 import { onCreateServiceRequest } from '../graphql/subscriptions';
-import { Card, CardContent, Typography, Chip, Grid, Box, Paper } from '@mui/material';
+import { Card, CardContent, Typography, Chip, Grid, Box } from '@mui/material';
 
 interface ServiceRequest {
   id: string;
