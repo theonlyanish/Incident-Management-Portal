@@ -16,7 +16,11 @@ interface ServiceRequest {
   location: string;
 }
 
-const ServiceRequestList = () => {
+interface ServiceRequestListProps {
+  refreshTrigger?: boolean;
+}
+
+const ServiceRequestList = ({ refreshTrigger }: ServiceRequestListProps) => {
   const [requests, setRequests] = useState<ServiceRequest[]>([]);
   const client = generateClient();
 
@@ -26,7 +30,7 @@ const ServiceRequestList = () => {
     return () => {
       sub.unsubscribe();
     };
-  }, []);
+  }, [refreshTrigger]);
 
   const fetchRequests = async () => {
     try {
@@ -79,61 +83,111 @@ const ServiceRequestList = () => {
   const getSeverityColor = (severity: string) => {
     switch (severity) {
       case 'HIGH':
-        return 'bg-red-100 text-red-800';
+        return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100';
       case 'MEDIUM':
-        return 'bg-yellow-100 text-yellow-800';
+        return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100';
       case 'LOW':
-        return 'bg-green-100 text-green-800';
+        return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-100';
     }
+  };
+
+  const getStatusBadge = (creationDate: string, resolutionDate: string) => {
+    const now = new Date();
+    const resolution = new Date(resolutionDate);
+    const isOverdue = now > resolution;
+    
+    return (
+      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+        isOverdue 
+          ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100' 
+          : 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100'
+      }`}>
+        {isOverdue ? 'Overdue' : 'Active'}
+      </span>
+    );
   };
 
   return (
     <div className="mt-8">
-      <h2 className="text-2xl font-bold mb-4">Service Requests</h2>
+      <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Service Requests</h2>
       <div className="space-y-4">
         {requests.map((request) => (
           <div
             key={request.id}
-            className="bg-white shadow rounded-lg p-6 border border-gray-200"
+            className="bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden 
+                     border border-gray-200 dark:border-gray-700 hover:shadow-xl 
+                     transition-all duration-300"
           >
-            <div className="flex justify-between items-start">
-              <div>
-                <h3 className="text-lg font-semibold">{request.name}</h3>
-                <p className="text-sm text-gray-500">Case #{request.caseNumber}</p>
+            <div className="p-6">
+              <div className="flex flex-wrap justify-between items-start gap-4">
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-2">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                      {request.name}
+                    </h3>
+                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${getSeverityColor(request.severity)}`}>
+                      {request.severity}
+                    </span>
+                    {getStatusBadge(request.creationDate, request.resolutionDate)}
+                  </div>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
+                    Case #{request.caseNumber}
+                  </p>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    {request.description}
+                  </p>
+                </div>
               </div>
-              <span
-                className={`px-2 py-1 rounded-full text-sm font-medium ${getSeverityColor(
-                  request.severity
-                )}`}
-              >
-                {request.severity}
-              </span>
-            </div>
-            
-            <p className="mt-2 text-gray-600">{request.description}</p>
-            
-            <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
-              <div>
-                <p className="text-gray-500">Reporter</p>
-                <p>{request.reporterName}</p>
-              </div>
-              <div>
-                <p className="text-gray-500">Contact</p>
-                <p>{request.contactInformation}</p>
-              </div>
-              <div>
-                <p className="text-gray-500">Location</p>
-                <p>{request.location}</p>
-              </div>
-              <div>
-                <p className="text-gray-500">Created</p>
-                <p>{new Date(request.creationDate).toLocaleDateString()}</p>
-              </div>
-              <div>
-                <p className="text-gray-500">Resolution Due</p>
-                <p>{new Date(request.resolutionDate).toLocaleDateString()}</p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                <div>
+                  <div className="space-y-3">
+                    <div>
+                      <p className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider font-medium">
+                        Reporter
+                      </p>
+                      <p className="text-gray-900 dark:text-white mt-1">{request.reporterName}</p>
+                    </div>
+                    <div>
+                      <p className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider font-medium">
+                        Contact
+                      </p>
+                      <p className="text-gray-900 dark:text-white mt-1">{request.contactInformation}</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div>
+                  <div className="space-y-3">
+                    <div>
+                      <p className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider font-medium">
+                        Location
+                      </p>
+                      <p className="text-gray-900 dark:text-white mt-1">{request.location}</p>
+                    </div>
+                    <div>
+                      <p className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider font-medium">
+                        Created
+                      </p>
+                      <p className="text-gray-900 dark:text-white mt-1">
+                        {new Date(request.creationDate).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div>
+                    <p className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider font-medium">
+                      Resolution Due
+                    </p>
+                    <p className="text-gray-900 dark:text-white mt-1">
+                      {new Date(request.resolutionDate).toLocaleDateString()}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

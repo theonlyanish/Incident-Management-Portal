@@ -103,76 +103,90 @@ const ServiceRequestForm = ({ onSubmitSuccess }: ServiceRequestFormProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 max-w-2xl mx-auto p-4">
+    <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl mx-auto">
       {submitStatus.type && (
         <div
           className={`p-4 rounded-md ${
             submitStatus.type === 'success'
               ? 'bg-green-50 text-green-800 dark:bg-green-900 dark:text-green-100'
               : 'bg-red-50 text-red-800 dark:bg-red-900 dark:text-red-100'
-          } mb-4 transition-all duration-300 ease-in-out`}
+          } mb-4 transition-all duration-300 ease-in-out animate-fadeIn`}
         >
           {submitStatus.message}
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Service Request Name</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Service Request Name
+          </label>
           <input
             type="text"
             name="name"
             value={formData.name}
             onChange={handleChange}
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm 
+            className="block w-full rounded-md border-gray-300 shadow-sm 
                      focus:border-indigo-500 focus:ring-indigo-500 
                      dark:bg-gray-800 dark:border-gray-600 dark:text-white
-                     transition-colors duration-200"
+                     hover:border-indigo-400 dark:hover:border-indigo-400
+                     transition-all duration-200"
+            placeholder="Enter service request name"
           />
         </div>
 
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Description
+          </label>
           <textarea
             name="description"
             value={formData.description}
             onChange={handleChange}
             required
             rows={4}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm 
+            className="block w-full rounded-md border-gray-300 shadow-sm 
                      focus:border-indigo-500 focus:ring-indigo-500
                      dark:bg-gray-800 dark:border-gray-600 dark:text-white
-                     transition-colors duration-200"
+                     hover:border-indigo-400 dark:hover:border-indigo-400
+                     transition-all duration-200 resize-y"
+            placeholder="Describe the service request"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Creation Date</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Creation Date
+          </label>
           <input
             type="date"
             name="creationDate"
             value={formData.creationDate}
             onChange={handleChange}
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm 
+            className="block w-full rounded-md border-gray-300 shadow-sm 
                      focus:border-indigo-500 focus:ring-indigo-500
                      dark:bg-gray-800 dark:border-gray-600 dark:text-white
-                     transition-colors duration-200"
+                     hover:border-indigo-400 dark:hover:border-indigo-400
+                     transition-all duration-200"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Severity</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Severity
+          </label>
           <select
             name="severity"
             value={formData.severity}
             onChange={handleChange}
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm 
+            className="block w-full rounded-md border-gray-300 shadow-sm 
                      focus:border-indigo-500 focus:ring-indigo-500
                      dark:bg-gray-800 dark:border-gray-600 dark:text-white
-                     transition-colors duration-200"
+                     hover:border-indigo-400 dark:hover:border-indigo-400
+                     transition-all duration-200"
           >
             <option value={Severity.LOW}>Low</option>
             <option value={Severity.MEDIUM}>Medium</option>
@@ -181,47 +195,59 @@ const ServiceRequestForm = ({ onSubmitSuccess }: ServiceRequestFormProps) => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Reporter Name</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Reporter Name
+          </label>
           <input
             type="text"
             name="reporterName"
             value={formData.reporterName}
             onChange={handleChange}
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm 
+            className="block w-full rounded-md border-gray-300 shadow-sm 
                      focus:border-indigo-500 focus:ring-indigo-500
                      dark:bg-gray-800 dark:border-gray-600 dark:text-white
-                     transition-colors duration-200"
+                     hover:border-indigo-400 dark:hover:border-indigo-400
+                     transition-all duration-200"
+            placeholder="Enter reporter name"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Contact Information</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Contact Information
+          </label>
           <input
             type="email"
             name="contactInformation"
             value={formData.contactInformation}
             onChange={handleChange}
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm 
+            className="block w-full rounded-md border-gray-300 shadow-sm 
                      focus:border-indigo-500 focus:ring-indigo-500
                      dark:bg-gray-800 dark:border-gray-600 dark:text-white
-                     transition-colors duration-200"
+                     hover:border-indigo-400 dark:hover:border-indigo-400
+                     transition-all duration-200"
+            placeholder="Enter email address"
           />
         </div>
 
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Location</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Location
+          </label>
           <input
             type="text"
             name="location"
             value={formData.location}
             onChange={handleChange}
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm 
+            className="block w-full rounded-md border-gray-300 shadow-sm 
                      focus:border-indigo-500 focus:ring-indigo-500
                      dark:bg-gray-800 dark:border-gray-600 dark:text-white
-                     transition-colors duration-200"
+                     hover:border-indigo-400 dark:hover:border-indigo-400
+                     transition-all duration-200"
+            placeholder="Enter location"
           />
         </div>
 
@@ -231,10 +257,19 @@ const ServiceRequestForm = ({ onSubmitSuccess }: ServiceRequestFormProps) => {
 
         {formData.attachments.length > 0 && (
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Attached Files</label>
-            <ul className="mt-2 space-y-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Attached Files
+            </label>
+            <ul className="space-y-2">
               {formData.attachments.map((fileKey, index) => (
-                <li key={index} className="text-sm text-gray-600 dark:text-gray-400">
+                <li 
+                  key={index} 
+                  className="text-sm text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-700 
+                           p-2 rounded-md flex items-center"
+                >
+                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                  </svg>
                   {fileKey.split('/').pop()}
                 </li>
               ))}
@@ -248,13 +283,22 @@ const ServiceRequestForm = ({ onSubmitSuccess }: ServiceRequestFormProps) => {
         disabled={isSubmitting}
         className="w-full mt-6 flex justify-center py-2 px-4 border border-transparent rounded-md 
                  shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 
-                 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
-                 disabled:opacity-50 disabled:cursor-not-allowed
-                 transform transition-all duration-200 hover:scale-[1.02]
                  dark:bg-indigo-500 dark:hover:bg-indigo-600
-                 dark:focus:ring-offset-gray-900"
+                 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+                 dark:focus:ring-offset-gray-900 transform hover:scale-105
+                 disabled:opacity-50 transition-all duration-200"
       >
-        {isSubmitting ? 'Submitting...' : 'Submit Service Request'}
+        {isSubmitting ? (
+          <div className="flex items-center">
+            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+            </svg>
+            Submitting...
+          </div>
+        ) : (
+          'Submit Service Request'
+        )}
       </button>
     </form>
   );

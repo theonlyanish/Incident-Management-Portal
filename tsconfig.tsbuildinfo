@@ -1,0 +1,1 @@
+{"root":["./src/api.ts","./src/app.tsx","./src/aws-exports.d.ts","./src/main.tsx","./src/vite-env.d.ts","./src/components/fileupload.tsx","./src/components/servicerequestform.tsx","./src/components/servicerequestlist.tsx","./src/graphql/mutations.ts","./src/graphql/queries.ts","./src/graphql/subscriptions.ts","./src/utils/createsampledata.ts"],"errors":true,"version":"5.7.3"}
