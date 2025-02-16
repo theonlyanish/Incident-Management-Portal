@@ -13,7 +13,7 @@ A modern, responsive web application for managing service requests and incidents
 
 ## Live Demo
 
-The application is deployed and accessible at: [Your Amplify URL]
+The application is deployed and accessible at: 
 
 ### Demo Credentials (can create own account or use the following)
 - Username: anka
