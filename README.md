@@ -15,9 +15,7 @@ A modern, responsive web application for managing service requests and incidents
 
 The application is deployed and accessible at: https://incident-management-portal.vercel.app/
 
-### Demo Credentials (can create own account or use the following)
-- Username: anka
-- Password: refer to email or approach document
+Need to create own account to use the application.
 
 ## Technology Stack
 
