@@ -13,7 +13,7 @@ A modern, responsive web application for managing service requests and incidents
 
 ## Live Demo
 
-The application is deployed and accessible at: https://incident-management-portal-j91im0vog-anish-ks-projects.vercel.app/
+The application is deployed and accessible at: https://incident-management-portal.vercel.app/
 
 ### Demo Credentials (can create own account or use the following)
 - Username: anka
