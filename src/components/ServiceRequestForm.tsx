@@ -5,6 +5,9 @@ import { Severity } from '../API';
 import { TextField, Button, MenuItem, Grid, Box } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
+import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
+import SendIcon from '@mui/icons-material/Send';
+import { useTheme } from '@mui/material/styles';
 
 interface ServiceRequestFormProps {
   onSubmitSuccess: () => void;
@@ -23,6 +26,7 @@ const ServiceRequestForm = ({ onSubmitSuccess }: ServiceRequestFormProps) => {
 
   const [submitting, setSubmitting] = useState(false);
   const client = generateClient();
+  const theme = useTheme();
 
   const calculateResolutionDate = (severity: Severity): Date => {
     const now = new Date();
@@ -87,6 +91,30 @@ const ServiceRequestForm = ({ onSubmitSuccess }: ServiceRequestFormProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const generateSampleData = () => {
+    const locations = ['Building A', 'Building B', 'Building C', 'Building D'];
+    const requestTypes = ['Network Issue', 'Hardware Failure', 'Software Bug', 'Security Alert'];
+    const descriptions = [
+      'Users are experiencing intermittent connectivity issues.',
+      'Server hardware showing signs of failure in redundant power supply.',
+      'Application crashes when processing large data sets.',
+      'Unusual login attempts detected from unknown IP addresses.'
+    ];
+
+    const randomIndex = Math.floor(Math.random() * 4);
+    const randomSeverity = [Severity.LOW, Severity.MEDIUM, Severity.HIGH][Math.floor(Math.random() * 3)];
+
+    setFormData({
+      name: requestTypes[randomIndex],
+      description: descriptions[randomIndex],
+      severity: randomSeverity,
+      resolutionDate: calculateResolutionDate(randomSeverity),
+      reporterName: 'John Smith',
+      contactInformation: 'john.smith@example.com',
+      location: locations[randomIndex]
+    });
   };
 
   return (
@@ -184,12 +212,42 @@ const ServiceRequestForm = ({ onSubmitSuccess }: ServiceRequestFormProps) => {
           </Grid>
 
           <Grid item xs={12}>
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Box sx={{ 
+              display: 'flex', 
+              justifyContent: 'flex-end',
+              gap: 2,
+              mt: 3
+            }}>
+              <Button
+                variant="outlined"
+                onClick={generateSampleData}
+                startIcon={<AutoFixHighIcon />}
+                sx={{
+                  borderWidth: 2,
+                  '&:hover': {
+                    borderWidth: 2,
+                    transform: 'translateY(-2px)',
+                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                  },
+                }}
+              >
+                Generate Sample
+              </Button>
               <Button
                 type="submit"
                 variant="contained"
                 disabled={submitting}
-                sx={{ minWidth: 120 }}
+                startIcon={<SendIcon />}
+                sx={{
+                  minWidth: 120,
+                  bgcolor: theme => theme.palette.mode === 'dark' ? '#ffffff' : '#000000',
+                  color: theme => theme.palette.mode === 'dark' ? '#000000' : '#ffffff',
+                  '&:hover': {
+                    bgcolor: theme => theme.palette.mode === 'dark' ? '#e0e0e0' : '#333333',
+                    transform: 'translateY(-2px)',
+                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                  },
+                }}
               >
                 {submitting ? 'Submitting...' : 'Submit'}
               </Button>
