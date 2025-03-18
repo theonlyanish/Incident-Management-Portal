@@ -7,7 +7,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import SendIcon from '@mui/icons-material/Send';
-import { useTheme } from '@mui/material/styles';
+//import { useTheme } from '@mui/material/styles';
 
 interface ServiceRequestFormProps {
   onSubmitSuccess: () => void;
@@ -26,7 +26,7 @@ const ServiceRequestForm = ({ onSubmitSuccess }: ServiceRequestFormProps) => {
 
   const [submitting, setSubmitting] = useState(false);
   const client = generateClient();
-  const theme = useTheme();
+ // const theme = useTheme();
 
   const calculateResolutionDate = (severity: Severity): Date => {
     const now = new Date();
